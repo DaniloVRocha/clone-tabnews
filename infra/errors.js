@@ -40,14 +40,14 @@ export class ServiceError extends Error {
   }
 }
 
-
 export class MethodNotAllowedError extends Error {
   constructor() {
     super("Um erro interno não esperado aconteceu");
 
     this.name = "MethodNotAllowedError";
-    this.message = "Método não permitido para este endpoint."
-    this.action = "Verifique se o método HTTP enviado é valido para este endpoint.";
+    this.message = "Método não permitido para este endpoint.";
+    this.action =
+      "Verifique se o método HTTP enviado é valido para este endpoint.";
     this.statusCode = 405;
   }
 

@@ -1,6 +1,5 @@
 import { InternalServerError, MethodNotAllowedError } from "infra/errors";
 
-
 function onNoMatchHandler(req, res) {
   const publicErrorObject = new MethodNotAllowedError();
   return res.status(publicErrorObject.statusCode).json(publicErrorObject);
@@ -13,9 +12,10 @@ function onErrorHandler(err, req, res) {
   });
   return res.status(publicErrorObject.statusCode).json(publicErrorObject);
 }
-const controller = { 
-  errorHandlers : {
+const controller = {
+  errorHandlers: {
     onNoMatch: onNoMatchHandler,
-    onError: onErrorHandler
-}}
+    onError: onErrorHandler,
+  },
+};
 export default controller;
