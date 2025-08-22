@@ -23,7 +23,7 @@ async function listPendingMigrations() {
   }
 }
 
-async function runMigrations() {
+async function runPendingMigrations() {
   let dbClient;
   try {
     dbClient = await database.getNewClient();
@@ -39,7 +39,7 @@ async function runMigrations() {
 
 const migrator = {
   listPendingMigrations,
-  runMigrations,
+  runPendingMigrations,
 };
 
 export default migrator;
