@@ -1,5 +1,5 @@
 import database from "infra/database";
-import { ValidationError } from "infra/errors.js";
+import { NotFoundError, ValidationError } from "infra/errors.js";
 
 async function findOneByUsername(username) {
   const userFound = runSelectQuery(username);
@@ -21,13 +21,12 @@ async function findOneByUsername(username) {
       values: [username],
     });
 
-    /*    if (result.rowCount > 0) {
-      throw new ValidationError({
-        message: "Username já está em uso",
-        action: "Utilize outro username",
+    if (result.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O username informado não foi encontrado no sistema.",
+        action: "Verifique se o username está digitado corretamente.",
       });
     }
-*/
     return result.rows[0];
   }
 }
