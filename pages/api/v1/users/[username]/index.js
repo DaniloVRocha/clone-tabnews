@@ -9,5 +9,7 @@ router.get(getHandler);
 export default router.handler(controller.errorHandlers);
 
 async function getHandler(req, res) {
-  return res.status(200).json({});
+  const username = req.query.username;
+  const userFound = await user.findOneByUsername(username);
+  return res.status(200).json(userFound);
 }

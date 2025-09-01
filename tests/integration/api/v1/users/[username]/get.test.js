@@ -1,4 +1,5 @@
 import orchestrator from "tests/orchestrator.js";
+import { version as uuidVersion } from "uuid";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -6,7 +7,7 @@ beforeAll(async () => {
   await orchestrator.runPendingMigrations();
 });
 
-describe("POST /api/v1/users/[username]", () => {
+describe("GET /api/v1/users/[username]", () => {
   describe("Anonymous User", () => {
     test("with exact case match for username'", async () => {
       const response1 = await fetch("http://localhost:3000/api/v1/users", {
@@ -28,6 +29,18 @@ describe("POST /api/v1/users/[username]", () => {
       );
 
       expect(response2.status).toBe(200);
+      const responseBody = await response2.json();
+      expect(responseBody).toEqual({
+        id: responseBody.id,
+        username: "MesmoCase",
+        email: "mesmo.case@gmail.com",
+        password: "senha123",
+        created_at: responseBody.created_at,
+        updated_at: responseBody.updated_at,
+      });
+      expect(uuidVersion(responseBody.id)).toBe(4);
+      expect(Date.parse(responseBody.created_at)).not.toBeNaN();
+      expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
     });
   });
 });
