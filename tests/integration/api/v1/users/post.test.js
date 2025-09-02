@@ -1,6 +1,5 @@
 import orchestrator from "tests/orchestrator.js";
 import { version as uuidVersion } from "uuid";
-import database from "infra/database";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -76,7 +75,7 @@ describe("POST /api/v1/users", () => {
         status_code: 400,
       });
     });
- 
+
     test("with duplicated 'username'", async () => {
       const response1 = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
