@@ -76,7 +76,7 @@ describe("POST /api/v1/users", () => {
         status_code: 400,
       });
     });
-
+ 
     test("with duplicated 'username'", async () => {
       const response1 = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
@@ -113,17 +113,6 @@ describe("POST /api/v1/users", () => {
         action: "Utilize outro username",
         status_code: 400,
       });
-      await database.query({
-        text: "INSERT INTO users (username, email, password) VALUES ($1, $2, $3);",
-        values: ["DaniloVRocha", "danilo@gmail.com", "senha123"],
-      });
-      const users = await database.query("select * from users");
-      console.log(users.rows);
-
-      const response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-      });
-      expect(response.status).toBe(201);
     });
   });
 });
