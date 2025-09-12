@@ -64,10 +64,16 @@ async function create(userInputValues) {
 async function update(username, userInputValues) {
   const currentUser = await findOneByUsername(username);
 
-  if ("username" in userInputValues) {
+  if (
+    "username" in userInputValues &&
+    userInputValues.username !== currentUser.username
+  ) {
     await validateUniqueUsername(userInputValues.username);
   }
-  if ("email" in userInputValues) {
+  if (
+    "email" in userInputValues &&
+    userInputValues.email !== currentUser.email
+  ) {
     await validateUniqueEmail(userInputValues.email);
   }
   if ("password" in userInputValues) {
