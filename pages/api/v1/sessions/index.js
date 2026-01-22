@@ -2,7 +2,6 @@ import { createRouter } from "next-connect";
 import controller from "infra/controller.js";
 import authentication from "models/authentication.js";
 import session from "models/sessions.js";
-import * as cookie from "cookie";
 
 const router = createRouter();
 
@@ -16,16 +15,9 @@ async function postHandler(req, res) {
     userInputValues.email,
     userInputValues.password,
   );
-
   const newSession = await session.create(authenticatedUser.id);
 
-  const setCookie = cookie.serialize("session_id", newSession.token, {
-    path: "/",
-    maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
-    secure: process.env.NODE_ENV === "production" ? true : false,
-    httpOnly: true,
-  });
-  res.setHeader("Set-Cookie", setCookie);
+  controller.setSessionCookie(newSession.token, res);
 
   return res.status(201).json(newSession);
 }

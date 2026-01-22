@@ -156,7 +156,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("with new 'password'", async () => {
       const newPassword = await orchestrator.createUser();
 
-      console.log(newPassword);
       const response = await fetch(
         `http://localhost:3000/api/v1/users/${newPassword.username}`,
         {
