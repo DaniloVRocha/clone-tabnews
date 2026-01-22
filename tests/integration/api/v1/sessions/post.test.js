@@ -131,7 +131,6 @@ describe("POST /api/v1/sessions", () => {
         path: "/",
         httpOnly: true,
       });
-      console.log(parsedSetCookie);
     });
   });
 });
